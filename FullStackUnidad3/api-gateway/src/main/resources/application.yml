@@ -1,0 +1,45 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: api-gateway
+  # SOLUCIÓN: Cambiamos localhost por config-server (nombre en Docker Compose)
+  config:
+    import: optional:configserver:http://config-server:8888
+  cloud:
+    gateway:
+      routes:
+        # RUTA PARA EL CATÁLOGO (API + DOCUMENTACIÓN)
+        - id: catalogo-service
+          uri: lb://catalogo-service
+          predicates:
+            - Path=/api/productos/**, /v3/api-docs/catalogo
+          filters:
+            - RewritePath=/v3/api-docs/catalogo, /v3/api-docs
+
+        # EJEMPLO PARA EL FUTURO: Así agregarás el de Clientes u otros
+        # - id: clientes-service
+        #   uri: lb://clientes-service
+        #   predicates:
+        #     - Path=/api/clientes/**, /v3/api-docs/clientes
+        #   filters:
+        #     - RewritePath=/v3/api-docs/clientes, /v3/api-docs
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      # SOLUCIÓN: Cambiamos localhost por eureka (nombre en Docker Compose)
+      defaultZone: http://eureka:8761/eureka/
+
+# CONFIGURACIÓN DE SWAGGER CENTRALIZADO
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Catalogo
+        url: /v3/api-docs/catalogo
+      # - name: Clientes
+      #   url: /v3/api-docs/clientes

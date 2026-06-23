@@ -1,0 +1,4 @@
+INSERT INTO entregas (pedido_id, direccion, estado, fecha_estimada, repartidor, fecha_creacion) VALUES
+                                                                                                    (1, 'Av. Libertador Bernardo O´Higgins 1234, Santiago', 'ENTREGADO', '2025-01-16 14:00:00', 'Juan Repartidor', NOW()),
+                                                                                                    (2, 'Calle Los Alerces 456, Providencia', 'EN_CAMINO', DATE_ADD(NOW(), INTERVAL 1 DAY), 'María Delivery', NOW()),
+                                                                                                    (3, 'Av. Las Condes 789, Las Condes', 'PENDIENTE', DATE_ADD(NOW(), INTERVAL 2 DAY), NULL, NOW());

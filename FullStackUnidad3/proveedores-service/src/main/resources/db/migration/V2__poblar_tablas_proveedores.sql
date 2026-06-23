@@ -1,0 +1,6 @@
+INSERT INTO proveedores (rut, razon_social, rubro, email_contacto, telefono, direccion, activo, fecha_registro) VALUES
+                                                                                                                    ('12345678-9', 'Panadería El Trigal', 'Panadería', 'contacto@trigal.cl', '912345678', 'Av. Panamericana 123, Santiago', true, NOW()),
+                                                                                                                    ('98765432-1', 'Carnes Los Andes', 'Carnes', 'ventas@carnesandes.cl', '923456789', 'Calle Mercado 456, Rancagua', true, NOW()),
+                                                                                                                    ('11122233-4', 'Bebidas del Sur', 'Bebidas', 'pedidos@bebidassur.cl', '934567890', 'Av. Industrial 789, Concepción', true, NOW()),
+                                                                                                                    ('44455566-7', 'Verduras Frescas', 'Verdulería', 'contacto@verdurasfrescas.cl', '945678901', 'Mercado Central local 12, Santiago', true, NOW()),
+                                                                                                                    ('77788899-0', 'Lácteos La Vaca Feliz', 'Lácteos', 'ventas@vacafeliz.cl', '956789012', 'Ruta 5 sur km 45, Los Ángeles', true, NOW());

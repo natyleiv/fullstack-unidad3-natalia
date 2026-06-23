@@ -1,0 +1,9 @@
+INSERT INTO productos (nombre, descripcion, precio, categoria, disponible, fecha_creacion, stock) VALUES
+                                                                                                      ('Completo Italiano', 'Pan, vienesa, tomate, palta, mayo', 3500, 'Completos', true, NOW(), 50),
+                                                                                                      ('Completo Alemán', 'Pan, vienesa, chucrut, ketchup', 3200, 'Completos', true, NOW(), 45),
+                                                                                                      ('Completo Sueco', 'Pan, vienesa, salsa rosada, cebolla', 3400, 'Completos', true, NOW(), 30),
+                                                                                                      ('Completo Americano', 'Pan, vienesa, mostaza, cebolla', 3000, 'Completos', true, NOW(), 60),
+                                                                                                      ('Bebida Coca Cola 500ml', 'Bebida gaseosa sabor cola', 2500, 'Bebidas', true, NOW(), 100),
+                                                                                                      ('Bebida Sprite 500ml', 'Bebida gaseosa sabor lima limón', 2500, 'Bebidas', true, NOW(), 80),
+                                                                                                      ('Papas Fritas Medianas', 'Papas fritas crujientes', 2000, 'Acompañamientos', true, NOW(), 40),
+                                                                                                      ('Sopaipilla con mostaza', 'Sopaipilla pasada con mostaza', 1000, 'Acompañamientos', true, NOW(), 70);

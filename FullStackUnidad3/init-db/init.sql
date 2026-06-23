@@ -1,0 +1,17 @@
+DROP DATABASE IF EXISTS db_clientes;
+DROP DATABASE IF EXISTS db_pedidos;
+DROP DATABASE IF EXISTS db_catalogo;
+DROP DATABASE IF EXISTS db_inventario;
+DROP DATABASE IF EXISTS db_cupones;
+DROP DATABASE IF EXISTS db_pagos;
+DROP DATABASE IF EXISTS db_delivery;
+DROP DATABASE IF EXISTS db_proveedores;
+
+CREATE DATABASE db_clientes;
+CREATE DATABASE db_pedidos;
+CREATE DATABASE db_catalogo;
+CREATE DATABASE db_inventario;
+CREATE DATABASE db_cupones;
+CREATE DATABASE db_pagos;
+CREATE DATABASE db_delivery;
+CREATE DATABASE db_proveedores;

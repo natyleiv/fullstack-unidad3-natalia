@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="api-gateway" />
+        <module name="eureka-server" />
+      </profile>
+      <profile name="Annotation profile for catalogo-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
+        </processorPath>
+        <module name="catalogo-service" />
+      </profile>
+      <profile name="Annotation profile for proveedores-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="delivery-service" />
+        <module name="config-server" />
+        <module name="cupones-service" />
+        <module name="proveedores-service" />
+        <module name="pagos-service" />
+        <module name="pedidos-service" />
+        <module name="clientes-service" />
+        <module name="inventario-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
+      <module name="catalogo-service" options="-parameters" />
+      <module name="clientes-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="cupones-service" options="-parameters" />
+      <module name="delivery-service" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="inventario-service" options="-parameters" />
+      <module name="pagos-service" options="-parameters" />
+      <module name="pedidos-service" options="-parameters" />
+      <module name="proveedores-service" options="-parameters" />
+    </option>
+  </component>
+</project>
