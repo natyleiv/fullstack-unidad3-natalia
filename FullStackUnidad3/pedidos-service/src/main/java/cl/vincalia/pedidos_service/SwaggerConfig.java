@@ -1,6 +1,7 @@
 package cl.vincalia.pedidos_service;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,9 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Pedidos Service API")
                         .version("1.0")
-                        .description("Microservicio de pedidos - FullStack Unidad 3"));
+                        .description("Microservicio de pedidos - FullStack Unidad 3")
+                        .contact(new Contact()
+                                .name("Natalia Leiva")
+                                .email("natalia.leiva@duocuc.cl")));
     }
 }

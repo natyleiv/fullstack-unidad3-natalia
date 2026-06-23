@@ -1,4 +1,4 @@
-package cl.vincalia.delivery_service;
+package cl.vincalia.clientes_service.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -13,11 +13,11 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Delivery Service API")
+                        .title("Clientes Service API")
                         .version("1.0")
-                        .description("Microservicio de entregas/delivery - FullStack Unidad 3")
+                        .description("Microservicio de gestión de clientes - FullStack Unidad 3")
                         .contact(new Contact()
-                                .name("Natalia Leiva")
-                                .email("natalia.leiva@duocuc.cl")));
+                                .name("Vicente Gonzalez")
+                                .email("vicente.gonzalez@duocuc.cl")));
     }
 }

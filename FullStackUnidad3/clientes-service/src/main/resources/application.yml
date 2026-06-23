@@ -1,28 +1,40 @@
+spring:
+  application:
+    name: clientes-service
+  config:
+    import: ${SPRING_CONFIG_IMPORT:optional:configserver:}
+  cloud:
+    config:
+      enabled: false
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/db_clientes?useSSL=false&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
 server:
   port: 0
 
-spring:
-  application:
-    name: clientes-service # Ej: clientes-service
-  config:
-    import: optional:configserver:http://config-server:8888
-  datasource:
-    # IMPORTANTE: mysql-db es el nombre del contenedor de Docker
-    url: jdbc:mysql://mysql-db:3306/[NOMBRE_BD]?serverTimezone=UTC
-    username: root
-    password: root
-  jpa:
-    hibernate:
-      ddl-auto: validate # Obligatorio por rúbrica
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-
 eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://eureka:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+    prefer-ip-address: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

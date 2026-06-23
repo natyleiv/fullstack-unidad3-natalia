@@ -1,16 +1,14 @@
 server:
-  port: 9090
+  port: 8082
 
 spring:
   application:
     name: api-gateway
-  # SOLUCIÓN: Cambiamos localhost por config-server (nombre en Docker Compose)
   config:
-    import: optional:configserver:http://config-server:8888
+    import: ${SPRING_CONFIG_IMPORT:optional:configserver:http://config-server:8888}
   cloud:
     gateway:
       routes:
-        # RUTA PARA EL CATÁLOGO (API + DOCUMENTACIÓN)
         - id: catalogo-service
           uri: lb://catalogo-service
           predicates:
@@ -18,28 +16,79 @@ spring:
           filters:
             - RewritePath=/v3/api-docs/catalogo, /v3/api-docs
 
-        # EJEMPLO PARA EL FUTURO: Así agregarás el de Clientes u otros
-        # - id: clientes-service
-        #   uri: lb://clientes-service
-        #   predicates:
-        #     - Path=/api/clientes/**, /v3/api-docs/clientes
-        #   filters:
-        #     - RewritePath=/v3/api-docs/clientes, /v3/api-docs
+        - id: clientes-service
+          uri: lb://clientes-service
+          predicates:
+            - Path=/api/clientes/**, /v3/api-docs/clientes
+          filters:
+            - RewritePath=/v3/api-docs/clientes, /v3/api-docs
+
+        - id: pedidos-service
+          uri: lb://pedidos-service
+          predicates:
+            - Path=/api/pedidos/**, /v3/api-docs/pedidos
+          filters:
+            - RewritePath=/v3/api-docs/pedidos, /v3/api-docs
+
+        - id: delivery-service
+          uri: lb://delivery-service
+          predicates:
+            - Path=/api/entregas/**, /v3/api-docs/delivery
+          filters:
+            - RewritePath=/v3/api-docs/delivery, /v3/api-docs
+
+        - id: cupones-service
+          uri: lb://cupones-service
+          predicates:
+            - Path=/api/cupones/**, /v3/api-docs/cupones
+          filters:
+            - RewritePath=/v3/api-docs/cupones, /v3/api-docs
+
+        - id: inventario-service
+          uri: lb://inventario-service
+          predicates:
+            - Path=/api/ingredientes/**, /v3/api-docs/inventario
+          filters:
+            - RewritePath=/v3/api-docs/inventario, /v3/api-docs
+
+        - id: pagos-service
+          uri: lb://pagos-service
+          predicates:
+            - Path=/api/pagos/**, /v3/api-docs/pagos
+          filters:
+            - RewritePath=/v3/api-docs/pagos, /v3/api-docs
+
+        - id: proveedores-service
+          uri: lb://proveedores-service
+          predicates:
+            - Path=/api/proveedores/**, /v3/api-docs/proveedores
+          filters:
+            - RewritePath=/v3/api-docs/proveedores, /v3/api-docs
 
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
-      # SOLUCIÓN: Cambiamos localhost por eureka (nombre en Docker Compose)
-      defaultZone: http://eureka:8761/eureka/
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://eureka-server:8761/eureka/}
 
-# CONFIGURACIÓN DE SWAGGER CENTRALIZADO
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
     urls:
       - name: Catalogo
         url: /v3/api-docs/catalogo
-      # - name: Clientes
-      #   url: /v3/api-docs/clientes
+      - name: Clientes
+        url: /v3/api-docs/clientes
+      - name: Pedidos
+        url: /v3/api-docs/pedidos
+      - name: Delivery
+        url: /v3/api-docs/delivery
+      - name: Cupones
+        url: /v3/api-docs/cupones
+      - name: Inventario
+        url: /v3/api-docs/inventario
+      - name: Pagos
+        url: /v3/api-docs/pagos
+      - name: Proveedores
+        url: /v3/api-docs/proveedores

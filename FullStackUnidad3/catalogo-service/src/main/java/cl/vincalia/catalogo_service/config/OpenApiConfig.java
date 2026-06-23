@@ -1,22 +1,23 @@
 package cl.vincalia.catalogo_service.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.servers.Server;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        Server gatewayServer = new Server();
-        // Asegúrate de que este sea el puerto real de tu API Gateway
-        gatewayServer.setUrl("http://localhost:9090");
-        gatewayServer.setDescription("API Gateway");
-
-        return new OpenAPI().servers(List.of(gatewayServer));
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Catalogo Service API")
+                        .version("1.0")
+                        .description("Microservicio de catálogo de productos - FullStack Unidad 3")
+                        .contact(new Contact()
+                                .name("Vicente Gonzalez")
+                                .email("vicente.gonzalez@duocuc.cl")));
     }
 }

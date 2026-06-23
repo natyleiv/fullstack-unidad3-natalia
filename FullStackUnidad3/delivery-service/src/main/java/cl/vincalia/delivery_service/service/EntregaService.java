@@ -1,8 +1,6 @@
 package cl.vincalia.delivery_service.service;
 
-
 import cl.vincalia.delivery_service.clients.PedidoFeignClient;
-import feign.FeignException;
 import cl.vincalia.delivery_service.dto.EntregaDTO;
 import cl.vincalia.delivery_service.dto.EntregaRequestDTO;
 import cl.vincalia.delivery_service.dto.PedidoDTO;
@@ -29,7 +27,6 @@ public class EntregaService {
 
     @Transactional
     public EntregaDTO crearEntrega(EntregaRequestDTO request) {
-        // Validar pedido existe (vía Feign)
         try {
             PedidoDTO pedido = pedidoClient.obtenerPedidoPorId(request.getPedidoId());
             if (pedido == null) {
@@ -75,7 +72,6 @@ public class EntregaService {
         repository.deleteById(id);
     }
 
-    // ========== REPORTES ==========
     public List<EntregaDTO> findByPedido(Long pedidoId) {
         return repository.findByPedidoId(pedidoId).stream().map(mapper::toDto).collect(Collectors.toList());
     }
