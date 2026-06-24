@@ -1,6 +1,7 @@
 services:
 
   mysql-db:
+    restart: always
     image: mysql:8.0
     container_name: mysql_database
     environment:
@@ -10,26 +11,21 @@ services:
     volumes:
       - ./init-db:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   eureka-server:
+    restart: always
     build:
       context: ./eureka-server
       dockerfile: Dockerfile
     container_name: eureka-server
     ports:
       - "8761:8761"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
-      interval: 15s
-      timeout: 5s
-      retries: 5
+    depends_on:
+      mysql-db:
+        condition: service_started
 
   config-server:
+    restart: always
     build:
       context: ./config-server
       dockerfile: Dockerfile
@@ -39,10 +35,13 @@ services:
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
+      mysql-db:
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
 
   clientes-service:
+    restart: always
     build:
       context: ./clientes-service
       dockerfile: Dockerfile
@@ -50,16 +49,19 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_clientes?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_clientes?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
 
   catalogo-service:
+    restart: always
     build:
       context: ./catalogo-service
       dockerfile: Dockerfile
@@ -67,16 +69,19 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_catalogo?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_catalogo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
 
   cupones-service:
+    restart: always
     build:
       context: ./cupones-service
       dockerfile: Dockerfile
@@ -84,16 +89,19 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_cupones?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_cupones?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
 
   inventario-service:
+    restart: always
     build:
       context: ./inventario-service
       dockerfile: Dockerfile
@@ -101,16 +109,19 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_inventario?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_inventario?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
 
   pagos-service:
+    restart: always
     build:
       context: ./pagos-service
       dockerfile: Dockerfile
@@ -118,16 +129,19 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_pagos?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_pagos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
 
   proveedores-service:
+    restart: always
     build:
       context: ./proveedores-service
       dockerfile: Dockerfile
@@ -135,16 +149,19 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_proveedores?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_proveedores?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
 
   pedidos-service:
+    restart: always
     build:
       context: ./pedidos-service
       dockerfile: Dockerfile
@@ -152,18 +169,21 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_pedidos?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_pedidos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
       clientes-service:
         condition: service_started
 
   delivery-service:
+    restart: always
     build:
       context: ./delivery-service
       dockerfile: Dockerfile
@@ -171,18 +191,21 @@ services:
     environment:
       SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_delivery?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/db_delivery?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       mysql-db:
-        condition: service_healthy
+        condition: service_started
       eureka-server:
-        condition: service_healthy
+        condition: service_started
+      config-server:
+        condition: service_started
       pedidos-service:
         condition: service_started
 
   api-gateway:
+    restart: always
     build:
       context: ./api-gateway
       dockerfile: Dockerfile
@@ -194,7 +217,7 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
       eureka-server:
-        condition: service_healthy
+        condition: service_started
       config-server:
         condition: service_started
 

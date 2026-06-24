@@ -8,62 +8,64 @@ spring:
     import: ${SPRING_CONFIG_IMPORT:optional:configserver:http://config-server:8888}
   cloud:
     gateway:
-      routes:
-        - id: catalogo-service
-          uri: lb://catalogo-service
-          predicates:
-            - Path=/api/productos/**, /v3/api-docs/catalogo
-          filters:
-            - RewritePath=/v3/api-docs/catalogo, /v3/api-docs
+      server:
+        webflux:
+          routes:
+            - id: catalogo-service
+              uri: lb://catalogo-service
+              predicates:
+                - Path=/api/productos/**, /v3/api-docs/catalogo
+              filters:
+                - RewritePath=/v3/api-docs/catalogo, /v3/api-docs
 
-        - id: clientes-service
-          uri: lb://clientes-service
-          predicates:
-            - Path=/api/clientes/**, /v3/api-docs/clientes
-          filters:
-            - RewritePath=/v3/api-docs/clientes, /v3/api-docs
+            - id: clientes-service
+              uri: lb://clientes-service
+              predicates:
+                - Path=/api/clientes/**, /v3/api-docs/clientes
+              filters:
+                - RewritePath=/v3/api-docs/clientes, /v3/api-docs
 
-        - id: pedidos-service
-          uri: lb://pedidos-service
-          predicates:
-            - Path=/api/pedidos/**, /v3/api-docs/pedidos
-          filters:
-            - RewritePath=/v3/api-docs/pedidos, /v3/api-docs
+            - id: pedidos-service
+              uri: lb://pedidos-service
+              predicates:
+                - Path=/api/pedidos/**, /v3/api-docs/pedidos
+              filters:
+                - RewritePath=/v3/api-docs/pedidos, /v3/api-docs
 
-        - id: delivery-service
-          uri: lb://delivery-service
-          predicates:
-            - Path=/api/entregas/**, /v3/api-docs/delivery
-          filters:
-            - RewritePath=/v3/api-docs/delivery, /v3/api-docs
+            - id: delivery-service
+              uri: lb://delivery-service
+              predicates:
+                - Path=/api/entregas/**, /v3/api-docs/delivery
+              filters:
+                - RewritePath=/v3/api-docs/delivery, /v3/api-docs
 
-        - id: cupones-service
-          uri: lb://cupones-service
-          predicates:
-            - Path=/api/cupones/**, /v3/api-docs/cupones
-          filters:
-            - RewritePath=/v3/api-docs/cupones, /v3/api-docs
+            - id: cupones-service
+              uri: lb://cupones-service
+              predicates:
+                - Path=/api/cupones/**, /v3/api-docs/cupones
+              filters:
+                - RewritePath=/v3/api-docs/cupones, /v3/api-docs
 
-        - id: inventario-service
-          uri: lb://inventario-service
-          predicates:
-            - Path=/api/ingredientes/**, /v3/api-docs/inventario
-          filters:
-            - RewritePath=/v3/api-docs/inventario, /v3/api-docs
+            - id: inventario-service
+              uri: lb://inventario-service
+              predicates:
+                - Path=/api/ingredientes/**, /v3/api-docs/inventario
+              filters:
+                - RewritePath=/v3/api-docs/inventario, /v3/api-docs
 
-        - id: pagos-service
-          uri: lb://pagos-service
-          predicates:
-            - Path=/api/pagos/**, /v3/api-docs/pagos
-          filters:
-            - RewritePath=/v3/api-docs/pagos, /v3/api-docs
+            - id: pagos-service
+              uri: lb://pagos-service
+              predicates:
+                - Path=/api/pagos/**, /v3/api-docs/pagos
+              filters:
+                - RewritePath=/v3/api-docs/pagos, /v3/api-docs
 
-        - id: proveedores-service
-          uri: lb://proveedores-service
-          predicates:
-            - Path=/api/proveedores/**, /v3/api-docs/proveedores
-          filters:
-            - RewritePath=/v3/api-docs/proveedores, /v3/api-docs
+            - id: proveedores-service
+              uri: lb://proveedores-service
+              predicates:
+                - Path=/api/proveedores/**, /v3/api-docs/proveedores
+              filters:
+                - RewritePath=/v3/api-docs/proveedores, /v3/api-docs
 
 eureka:
   instance:
